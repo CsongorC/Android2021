@@ -3,5 +3,5 @@ package main
 fun main() {
     val quiz = QuizController()
 
-    quiz.doQuiz(3)
+    quiz.doQuiz(10)
 }

@@ -27,7 +27,7 @@ class QuizController {
 
             val correctAnswer : String = questions[iter].answers[0]
 
-            println("Question: " + questions[iter].text)
+            println("${iter+1}. " + questions[iter].text)
             var quizAnswers = questions[iter].answers.shuffled()
             println("1. " + quizAnswers[0])
             println("2. " + quizAnswers[1])
