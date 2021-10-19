@@ -6,4 +6,9 @@
     <string name="name">Name</string>
     <string name="start">Get Started</string>
     <string name="contact">Choose Contact</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="take_image">Take Image</string>
+    <string name="camera_icon">Camera icon</string>
+    <string name="selected_image">Selected Image</string>
+    <string name="hello">Hello, </string>
 </resources>
