@@ -11,4 +11,6 @@
     <string name="camera_icon">Camera icon</string>
     <string name="selected_image">Selected Image</string>
     <string name="hello">Hello, </string>
+    <string name="next_question">Next question</string>
+    <string name="your_score">Your score:</string>
 </resources>
