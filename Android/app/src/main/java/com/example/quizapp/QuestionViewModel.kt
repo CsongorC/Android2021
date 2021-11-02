@@ -14,9 +14,27 @@ class QuestionViewModel : ViewModel() {
 
     private var counter = 0
     private var score = 0
+    private var questionsNumber = 10
+    private var name = "NO DATA"
+    private var highScore = "0"
+    private var questionCounterLimit = 10
+    private var answerCounterLimit = 40
+
+    fun increaseCounters(){
+        questionCounterLimit += 1
+        answerCounterLimit += 4
+    }
 
     fun getCounter(): Int {
         return counter
+    }
+
+    fun getName() : String{
+        return name
+    }
+
+    fun setName(newName : String){
+        name = newName
     }
 
     fun reset() {
@@ -24,8 +42,20 @@ class QuestionViewModel : ViewModel() {
         score = 0
     }
 
+    fun getHighScore(): String {
+        return highScore
+    }
+
+    fun setHighScore(newHighScore: String){
+        highScore = newHighScore
+    }
+
     fun getScore(): Int {
         return score
+    }
+
+    fun getQuestionsNumber(): String {
+        return questionsNumber.toString()
     }
 
     fun incrementCounter() {
@@ -45,10 +75,10 @@ class QuestionViewModel : ViewModel() {
     var answerCounter : Int = 0
 
     fun loadQuestion() : Question {
-        if(questionCounter == 10){
+        if(questionCounter == questionCounterLimit){
             questionCounter = 0
         }
-        if(answerCounter == 40){
+        if(answerCounter == answerCounterLimit){
             answerCounter = 0
         }
         question = Question(FakeRepository.questions[questionCounter],

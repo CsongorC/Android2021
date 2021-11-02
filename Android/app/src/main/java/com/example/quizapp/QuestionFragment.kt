@@ -75,9 +75,12 @@ class QuestionFragment : Fragment() {
                 println("WRONG ANSWER")
             }
 
+            Log.d(ContentValues.TAG, "QF: Counter: ${viewModel.getCounter()}")
+
             viewModel.incrementCounter()
-            if (viewModel.getCounter() == 10) {
+            if (viewModel.getCounter() == 9) {
                 findNavController().navigate(R.id.action_questionFragment_to_quizEndFragment)
+                //viewModel.reset()
             } else {
                 findNavController().navigate(R.id.action_questionFragment_self)
             }

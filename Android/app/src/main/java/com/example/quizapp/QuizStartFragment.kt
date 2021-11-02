@@ -24,6 +24,8 @@ class QuizStartFragment : Fragment(R.layout.fragment_quiz_start) {
     private lateinit var startButton: Button
     private lateinit var contactsButton: Button
 
+    val viewModel: QuestionViewModel by activityViewModels()
+
     private val getMyContact =
         registerForActivityResult(ActivityResultContracts.PickContact()) {
             it?.also { contactUri ->
@@ -68,6 +70,10 @@ class QuizStartFragment : Fragment(R.layout.fragment_quiz_start) {
                 Snackbar.make(requireContext(), it, "You must enter your name", Snackbar.LENGTH_SHORT).show()
             }else{
                 findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
+                if(viewModel.getName() != playerName.text.toString()){
+                    viewModel.setHighScore("0")
+                }
+                viewModel.setName(playerName.text.toString())
             }
         }
 

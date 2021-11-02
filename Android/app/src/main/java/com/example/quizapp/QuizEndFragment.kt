@@ -38,6 +38,9 @@ class QuizEndFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_tryagain.setOnClickListener {
+            if(viewModel.getScore() > viewModel.getHighScore().toInt()){
+                viewModel.setHighScore(viewModel.getScore().toString())
+            }
             viewModel.reset()
             val action = QuizEndFragmentDirections.actionQuizEndFragmentToQuizStartFragment()
             findNavController().navigate(action)
@@ -46,10 +49,12 @@ class QuizEndFragment : Fragment() {
 
     private fun loadResult(){
         resultTextView.text = viewModel.getScore().toString()
+        val number = viewModel.getQuestionsNumber()
+        resultTextView.append("/$number")
     }
 
     private fun initializeView(view: View){
-        resultTextView = view.findViewById(R.id.result)
+        resultTextView= view.findViewById(R.id.result)
         Log.d(ContentValues.TAG, "QuizEndFragment: initializeView()")
     }
 }
