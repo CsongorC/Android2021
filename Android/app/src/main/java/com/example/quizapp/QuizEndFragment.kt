@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_question.*
 import kotlinx.android.synthetic.main.fragment_quiz_end.*
 
@@ -39,12 +41,20 @@ class QuizEndFragment : Fragment() {
 
         btn_tryagain.setOnClickListener {
             if(viewModel.getScore() > viewModel.getHighScore().toInt()){
+                Snackbar.make(requireContext(), it, "New highscore!", Snackbar.LENGTH_SHORT).show()
                 viewModel.setHighScore(viewModel.getScore().toString())
             }
             viewModel.reset()
             val action = QuizEndFragmentDirections.actionQuizEndFragmentToQuizStartFragment()
             findNavController().navigate(action)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    Log.d("BACK","Back Button Pressed")
+                }
+            })
     }
 
     private fun loadResult(){

@@ -39,6 +39,9 @@ class HomeFragment : Fragment() {
         view.createQuestionBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_questionAddFragment)
         }
+        view.readQuestionsBtn.setOnClickListener{
+            findNavController().navigate(R.id.action_homeFragment_to_questionListFragment)
+        }
     }
 
 }

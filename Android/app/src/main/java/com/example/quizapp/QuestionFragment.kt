@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.DataBindingUtil.setContentView
 
@@ -23,8 +24,10 @@ import androidx.lifecycle.ViewModelProviders
 
 import androidx.navigation.fragment.findNavController
 import com.example.quizapp.databinding.FragmentQuestionBinding
+import com.google.android.material.snackbar.Snackbar
 
 import kotlinx.android.synthetic.main.fragment_question.*
+import kotlinx.android.synthetic.main.fragment_question_add.*
 import main.Question
 
 class QuestionFragment : Fragment() {
@@ -77,12 +80,17 @@ class QuestionFragment : Fragment() {
 
             Log.d(ContentValues.TAG, "QF: Counter: ${viewModel.getCounter()}")
 
-            viewModel.incrementCounter()
             if (viewModel.getCounter() == 9) {
                 findNavController().navigate(R.id.action_questionFragment_to_quizEndFragment)
                 //viewModel.reset()
             } else {
-                findNavController().navigate(R.id.action_questionFragment_self)
+                if(first.isChecked() || second.isChecked() || third.isChecked() || forth.isChecked()){
+                    viewModel.incrementCounter()
+                    findNavController().navigate(R.id.action_questionFragment_self)
+                }
+                else{
+                    Snackbar.make(requireContext(), it, "You must choose an option", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -91,6 +99,14 @@ class QuestionFragment : Fragment() {
                 button.isSelected = !button.isSelected
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    Log.d("BACK","Back Button Pressed")
+                    Snackbar.make(requireContext(), view, "Sorry, you can't navigate backwards", Snackbar.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun loadQuestion(){

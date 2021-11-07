@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import com.example.quizapp.R
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_question_add.*
 import kotlinx.android.synthetic.main.fragment_question_add.view.*
 
@@ -53,6 +54,14 @@ class QuestionAddFragment : Fragment() {
                 FakeRepository.answers.add(answer4OfQuestionToBeAdded)
 
                 viewModel.increaseCounters()
+
+                Snackbar.make(requireContext(), it, "Question successfully added", Snackbar.LENGTH_SHORT).show()
+
+                questionInput.text?.clear()
+                answerInput1.text?.clear()
+                answerInput2.text?.clear()
+                answerInput3.text?.clear()
+                answerInput4.text?.clear()
 
             } else {
                 Log.d("CLICK", "Rejected")

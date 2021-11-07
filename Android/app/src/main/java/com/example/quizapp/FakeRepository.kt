@@ -56,9 +56,9 @@ object FakeRepository {
         "3",
         "4",
         "5",
+        "All of these",
         "Arrays and Booleans",
         "Characters",
-        "Strings and Numbers",
-        "All of these"
+        "Strings and Numbers"
     )
 }

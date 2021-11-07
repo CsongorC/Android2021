@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.quizGame -> findNavController(R.id.nav_host_fragment).navigate(R.id.quizStartFragment)
                 R.id.addQuestion -> findNavController(R.id.nav_host_fragment).navigate(R.id.questionAddFragment)
                 R.id.profile -> findNavController(R.id.nav_host_fragment).navigate(R.id.profileFragment)
+                R.id.listOfQuestions -> findNavController(R.id.nav_host_fragment).navigate(R.id.questionListFragment)
                 else -> false
             }
             drawerLayout.close()
