@@ -6,6 +6,8 @@ import main.Question
 
 object FakeRepository {
 
+    var questionDetail = Question("", listOf("","","",""),"")
+
     var questions: MutableList<String> = mutableListOf(
         "Who developed Kotlin?",
         "Which extension is responsible to save Kotlin files?",

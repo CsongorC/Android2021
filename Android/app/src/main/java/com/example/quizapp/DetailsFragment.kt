@@ -43,6 +43,7 @@ class DetailsFragment : Fragment() {
 
         if(view != null){
             initializeView(view)
+            loadDetails()
         }
 
         return view
@@ -52,8 +53,19 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun loadDetails(){
+        questionText.text = FakeRepository.questionDetail.text
+        firstText.text = FakeRepository.questionDetail.answers[0]
+        secondText.text = FakeRepository.questionDetail.answers[1]
+        thirdText.text = FakeRepository.questionDetail.answers[2]
+        forthText.text = FakeRepository.questionDetail.answers[3]
+    }
+
     private fun initializeView(view: View) {
         questionText = view.findViewById(R.id.question)
-
+        firstText = view.findViewById(R.id.first)
+        secondText = view.findViewById(R.id.second)
+        thirdText = view.findViewById(R.id.third)
+        forthText = view.findViewById(R.id.forth)
     }
 }

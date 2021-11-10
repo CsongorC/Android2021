@@ -1,7 +1,6 @@
 package com.example.quizapp
 
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,21 +12,14 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.setContentView
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 
 import androidx.navigation.fragment.findNavController
-import com.example.quizapp.databinding.FragmentQuestionBinding
 import com.google.android.material.snackbar.Snackbar
 
 import kotlinx.android.synthetic.main.fragment_question.*
-import kotlinx.android.synthetic.main.fragment_question_add.*
 import main.Question
 
 class QuestionFragment : Fragment() {
@@ -80,7 +72,7 @@ class QuestionFragment : Fragment() {
 
             Log.d(ContentValues.TAG, "QF: Counter: ${viewModel.getCounter()}")
 
-            if (viewModel.getCounter() == 9) {
+            if (viewModel.getCounter() == 4) {
                 findNavController().navigate(R.id.action_questionFragment_to_quizEndFragment)
                 //viewModel.reset()
             } else {
@@ -114,6 +106,7 @@ class QuestionFragment : Fragment() {
         question = viewModel.getQuestion()
         correctAnswer = listOf(question.correctAnswer)
         viewModel.loadQuestion()
+
         questionText.text = question.text
         val answers = arrayListOf<String>()
         answers.addAll(question.answers)
@@ -121,6 +114,8 @@ class QuestionFragment : Fragment() {
         answers.shuffled().forEach{
             (answerGroup.getChildAt(i) as RadioButton).text = it; i++
         }
+
+
     }
 
     private fun initializeView(view: View){

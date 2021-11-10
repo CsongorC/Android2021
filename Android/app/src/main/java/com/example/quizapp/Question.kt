@@ -1,3 +1,3 @@
 package main
 
-data class Question(val text : String, val answers : List<String>, val correctAnswer: String)
+data class Question(val text : String, val answers : List<String>, var correctAnswer: String)

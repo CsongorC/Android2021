@@ -9,11 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.navigation.fragment.findNavController
+import com.example.quizapp.FakeRepository.questions
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_quiz_start.*
 
@@ -54,6 +58,7 @@ class QuizStartFragment : Fragment(R.layout.fragment_quiz_start) {
         view?.apply {
             initializeView(this)
             registerListeners(this)
+            viewModel.loadQuestionList()
         }
         return view
     }
@@ -66,14 +71,27 @@ class QuizStartFragment : Fragment(R.layout.fragment_quiz_start) {
 
     private fun registerListeners(view: View) {
         startButton.setOnClickListener {
+            viewModel.loadQuestionList()
             if (playerName.text.toString().isValidPlayerName()) {
                 Snackbar.make(requireContext(), it, "You must enter your name", Snackbar.LENGTH_SHORT).show()
-            }else{
-                findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
-                if(viewModel.getName() != playerName.text.toString()){
-                    viewModel.setHighScore("0")
+            }
+            else {
+                if (questions.isNotEmpty() ) {
+                    activity?.supportFragmentManager?.commit {
+                        viewModel.loadQuestion()
+                        findNavController().navigate(R.id.action_quizStartFragment_to_questionFragment)
+                        if (viewModel.getName() != playerName.text.toString()) {
+                            viewModel.setHighScore("0")
+                        }
+                        viewModel.setName(playerName.text.toString())
+                    }
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "The questions are still loading, try again!",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-                viewModel.setName(playerName.text.toString())
             }
         }
 

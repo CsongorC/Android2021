@@ -14,6 +14,7 @@ import com.example.quizapp.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_question_add.*
 import kotlinx.android.synthetic.main.fragment_question_add.view.*
+import main.Question
 
 class QuestionAddFragment : Fragment() {
 
@@ -47,11 +48,11 @@ class QuestionAddFragment : Fragment() {
                 val answer3OfQuestionToBeAdded = answerInput3.text.toString()
                 val answer4OfQuestionToBeAdded = answerInput4.text.toString()
 
-                FakeRepository.questions.add(questionToBeAdded)
-                FakeRepository.answers.add(answer1OfQuestionToBeAdded)
-                FakeRepository.answers.add(answer2OfQuestionToBeAdded)
-                FakeRepository.answers.add(answer3OfQuestionToBeAdded)
-                FakeRepository.answers.add(answer4OfQuestionToBeAdded)
+                var questionAdded = Question(questionToBeAdded,
+                listOf(answer1OfQuestionToBeAdded,answer2OfQuestionToBeAdded,answer3OfQuestionToBeAdded,answer4OfQuestionToBeAdded),
+                    answer1OfQuestionToBeAdded)
+
+                viewModel.addQuestion(questionAdded)
 
                 viewModel.increaseCounters()
 

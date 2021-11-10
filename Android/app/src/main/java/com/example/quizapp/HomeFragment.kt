@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
+    val viewModel: QuestionViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,6 +42,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_questionAddFragment)
         }
         view.readQuestionsBtn.setOnClickListener{
+            viewModel.loadQuestionList()
             findNavController().navigate(R.id.action_homeFragment_to_questionListFragment)
         }
     }

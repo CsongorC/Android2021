@@ -1,24 +1,39 @@
 package com.example.quizapp
 
-import android.content.ContentValues
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import main.Question
 
 class QuestionViewModel : ViewModel() {
 
-    private var question:Question = loadQuestion()
+    private lateinit var question : Question
+    private var questions = MutableLiveData<ArrayList<Question>>()
 
     private var counter = 0
     private var score = 0
-    private var questionsNumber = 10
+    private var questionsNumber = 5
     private var name = "NO DATA"
     private var highScore = "0"
     private var questionCounterLimit = 10
     private var answerCounterLimit = 40
+    private val loading = MutableLiveData<Boolean>()
+
+    fun isLoading(): Boolean {
+        return loading.value!!
+    }
+
+    fun addQuestion(question: Question) {
+        questions.value?.add(question)
+    }
+
+    fun getAllQuestions(): LiveData<ArrayList<Question>> {
+        return questions
+    }
 
     fun increaseCounters(){
         questionCounterLimit += 1
@@ -67,7 +82,6 @@ class QuestionViewModel : ViewModel() {
     }
 
     fun getQuestion(): Question {
-        Log.d(ContentValues.TAG, "QuestionViewModel: getQuestions()")
         return question
     }
 
@@ -75,22 +89,35 @@ class QuestionViewModel : ViewModel() {
     var answerCounter : Int = 0
 
     fun loadQuestion() : Question {
-        if(questionCounter == questionCounterLimit){
+        question = Question(
+            questions.value?.get(questionCounter)?.text.toString(),
+        listOf(questions.value?.get(questionCounter)?.answers?.get(0).toString(),
+            questions.value?.get(questionCounter)?.answers?.get(1).toString(),
+            questions.value?.get(questionCounter)?.answers?.get(2).toString(),
+            questions.value?.get(questionCounter)?.answers?.get(3).toString()),
+            questions.value?.get(questionCounter)?.answers?.get(0).toString())
+        questionCounter++
+
+        if(questionCounter == 9){
             questionCounter = 0
         }
-        if(answerCounter == answerCounterLimit){
-            answerCounter = 0
-        }
-        question = Question(FakeRepository.questions[questionCounter],
-        listOf(FakeRepository.answers[answerCounter++],
-            FakeRepository.answers[answerCounter++],
-            FakeRepository.answers[answerCounter++],
-            FakeRepository.answers[answerCounter++]),
-        FakeRepository.answers[answerCounter-4])
-        Log.d(ContentValues.TAG, "QVM: correct answer: ${FakeRepository.answers[answerCounter-4]}")
-        questionCounter++
-        return question
 
+        return question
     }
 
+    fun shuffleQuestions() = questions.value?.shuffle()
+
+
+    fun loadQuestionList(){
+        loading.value = true
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                QuestionRepository.getQuestions()
+            }
+            if (result.isSuccessful) {
+                questions.value = result.body()
+                loading.value = false
+            }
+        }
+    }
 }

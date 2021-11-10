@@ -35,6 +35,9 @@ android {
     dataBinding {
         enabled true
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -60,6 +63,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.recyclerview:recyclerview-selection:1.2.0-alpha01"
     implementation "androidx.cardview:cardview:1.0.0"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
 
     kapt "com.android.databinding:compiler:3.1.4"
 }

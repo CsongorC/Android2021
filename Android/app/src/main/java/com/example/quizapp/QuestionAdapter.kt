@@ -1,17 +1,23 @@
 package com.example.quizapp
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_layout.view.*
 import main.Question
+import androidx.fragment.app.FragmentActivity
+
+import androidx.lifecycle.ViewModelProviders
 
 class QuestionAdapter(private val questionList : ArrayList<Question>
                       ) : RecyclerView.Adapter<QuestionAdapter.ExampleViewHolder>() {
@@ -27,11 +33,13 @@ class QuestionAdapter(private val questionList : ArrayList<Question>
         val currentItem = questionList[position]
 
         holder.QuestionView.text = currentItem.text
-        holder.CorrectText.text = currentItem.correctAnswer
+        //holder.CorrectText.text = currentItem.correctAnswer
+        holder.CorrectText.text = currentItem.answers[0]
         holder.deleteButton.setOnClickListener{deleteItem(position)}
         holder.detailsButton.setOnClickListener{
-                view ->
-            view.findNavController().navigate(R.id.action_questionListFragment_to_detailsFragment)
+                view -> view.findNavController().navigate(R.id.action_questionListFragment_to_detailsFragment)
+            FakeRepository.questionDetail = currentItem
+            //Log.d(ContentValues.TAG, FakeRepository.questionDetail.text)
         }
     }
 
